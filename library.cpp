@@ -30,14 +30,14 @@ typedef struct {
 
 // pretty simple function to calculate distance between two three dimensional points
 float distance3D(float pX, float pY, float pZ, float eX, float eY, float eZ) {
-    return sqrt(pow(pX - eX, 2.0) + pow(pY - eY, 2.0) + pow(pZ - eZ, 2.0));
+    return (float)sqrt(pow(pX - eX, 2.0) + pow(pY - eY, 2.0) + pow(pZ - eZ, 2.0));
 }
 
 // If I have done this correctly it will take an address (base) and apply offsets
 // provided in a list (offsets[]) to it until it has reached the end. At which point
 // all you have to do is dereference and cast the value to edit it in memory. I could
 // be wrong though since I haven't done much work in c++
-uintptr_t addressFinder(uintptr_t *base, uintptr_t offsets[]) {
+uintptr_t addressFinder(uintptr_t const *base, uintptr_t const offsets[]) {
     int num_elements = sizeof(offsets) / sizeof(offsets[0]);
     uintptr_t address = *base;
     for (int i = 0; i < num_elements; i++) {
@@ -55,8 +55,8 @@ aimbot(struct posVec my, struct aimVec aim, struct posVec enemy, float fovAllow,
     cloAngle.y = 0.0;
 
     float enDist = distance3D(my.x, my.y, my.z, enemy.x, enemy.y, enemy.z);
-    float angleX = (-(float) atan2(enemy.x - my.x, enemy.y - my.y)) / 3.14159265358979323846 * 180.0f + 180.0f;
-    float angleY = (atan2(enemy.z - my.z, enDist)) * 180.0f / 3.14159265358979323846;
+    auto angleX = (float)((-(float) atan2(enemy.x - my.x, enemy.y - my.y)) / 3.14159265358979323846 * 180.0f + 180.0f);
+    auto angleY = (float)((atan2(enemy.z - my.z, enDist)) * 180.0f / 3.14159265358979323846);
     if (!(abs(angleX - aim.x) > fovAllow || abs(angleY - aim.y) > fovAllow)) {
 
 
