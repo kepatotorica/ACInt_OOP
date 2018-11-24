@@ -15,6 +15,7 @@ struct aimVec
 };
 
 class Aimbot {
+
 //public:
 //    struct posVec getClosest(struct posList*){
 //        return posVec;
