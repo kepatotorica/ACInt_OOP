@@ -47,8 +47,7 @@ uintptr_t addressFinder(uintptr_t const *base, uintptr_t const offsets[]) {
 }
 
 
-struct aimVec
-aimbot(struct posVec my, struct aimVec aim, struct posVec enemy, float fovAllow, float *minDist, bool *found) {
+struct aimVec aimbot(struct posVec my, struct aimVec aim, struct posVec enemy, float fovAllow, float *minDist, bool *found) {
     //TODO make the rest of this oo
     struct aimVec cloAngle;
     cloAngle.x = 0.0;
@@ -74,14 +73,16 @@ DWORD WINAPI hackthread(LPVOID param) {
 //for debugging
     AllocConsole();
     AttachConsole(GetProcessId(GetCurrentProcess()));
-    freopen("CONOUT$", "w", stdout);
+//    freopen("CONOUT$", "w", stdout);
+    FILE *stream;
+    freopen_s(&stream, "CONOUT$", "w", stdout);
+
     HANDLE han = GetStdHandle(STD_OUTPUT_HANDLE); //this doesn't work with minGW compiler
     printf_s("----------------------------------------------------------------------\n");
     printf_s("                kiyip's first internal aimbot\n");
     printf_s("          right click or left alt activates aimbot\n");
     printf_s("                         f3 to quit\n");
     printf_s("----------------------------------------------------------------------\n");
-
 //-------------
 
     uintptr_t *localPlayerAddress = (uintptr_t *) (0x50F4F4);
@@ -197,16 +198,12 @@ DWORD WINAPI hackthread(LPVOID param) {
             }
         }
 
-//        currEnOffs[0] = entSize * closestEntNum;
-//        currentEntAdd = (uintptr_t *)addressFinder(entArrayBaseAdd, currEnOffs);
-//        enemy.health = (int *) addressFinder(currentEntAdd, healthOffs);
-
 //        printf_s("enemy health: %i\n", *enemy.health );
         Sleep(1);
 //        system ("CLS");
     }
-    *my.health = 99;
-    *my.health = 100;
+//    *my.health = 99;
+//    *my.health = 100;
     system("CLS");
     FreeConsole();
     FreeLibraryAndExitThread((HMODULE) param, NULL);
